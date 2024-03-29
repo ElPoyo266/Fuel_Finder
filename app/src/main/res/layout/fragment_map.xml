@@ -10,6 +10,7 @@
         android:id="@+id/mapView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:apiKey="AIzaSyDm5hCLoyp1JDK4QD5j3PjT44SnBMtccG4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

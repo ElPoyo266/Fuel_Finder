@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapFragment extends Fragment implements OnMapReadyCallback {
     private FragmentMapBinding binding;
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -32,6 +31,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         View root = binding.getRoot();
         MapView map = root.findViewById(R.id.mapView);
         map.getMapAsync(this);
+        map.onCreate(savedInstanceState);
         return root;
     }
 
