@@ -3,6 +3,9 @@ package com.example.fuelfinder;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,16 +40,16 @@ public class Station implements Serializable
     public Double priceGazole;
     @SerializedName("price_sp95")
     @Expose
-    public Object priceSp95;
+    public Double priceSp95;
     @SerializedName("price_sp98")
     @Expose
     public Double priceSp98;
     @SerializedName("price_gplc")
     @Expose
-    public Object priceGplc;
+    public Double priceGplc;
     @SerializedName("price_e10")
     @Expose
-    public Object priceE10;
+    public Double priceE10;
     @SerializedName("price_e85")
     @Expose
     public Double priceE85;
@@ -58,7 +61,7 @@ public class Station implements Serializable
     public Object brand;
     @SerializedName("name")
     @Expose
-    public Object name;
+    public String name;
     @SerializedName("geo_point")
     @Expose
     public Object geoPoint;
@@ -92,7 +95,7 @@ public class Station implements Serializable
      * @param name
      * @param brand
      */
-    public Station(String cp, String address, String comArmName, String automate2424, String timetable, List<String> fuel, List<String> shortage, String update, Double priceGazole, Object priceSp95, Double priceSp98, Object priceGplc, Object priceE10, Double priceE85, List<String> services, Object brand, Object name, Object geoPoint) {
+    public Station(String cp, String address, String comArmName, String automate2424, String timetable, List<String> fuel, List<String> shortage, String update, Double priceGazole, Double priceSp95, Double priceSp98, Double priceGplc, Double priceE10, Double priceE85, List<String> services, Object brand, String name, Object geoPoint) {
         super();
         this.cp = cp;
         this.address = address;
@@ -159,7 +162,7 @@ public class Station implements Serializable
         return this;
     }
 
-    public Station withPriceSp95(Object priceSp95) {
+    public Station withPriceSp95(Double priceSp95) {
         this.priceSp95 = priceSp95;
         return this;
     }
@@ -169,12 +172,12 @@ public class Station implements Serializable
         return this;
     }
 
-    public Station withPriceGplc(Object priceGplc) {
+    public Station withPriceGplc(Double priceGplc) {
         this.priceGplc = priceGplc;
         return this;
     }
 
-    public Station withPriceE10(Object priceE10) {
+    public Station withPriceE10(Double priceE10) {
         this.priceE10 = priceE10;
         return this;
     }
@@ -194,7 +197,7 @@ public class Station implements Serializable
         return this;
     }
 
-    public Station withName(Object name) {
+    public Station withName(String name) {
         this.name = name;
         return this;
     }

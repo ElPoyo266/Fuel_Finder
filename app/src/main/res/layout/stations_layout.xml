@@ -16,12 +16,16 @@
 
     <TextView
         android:id="@+id/stationNom"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:autoText="false"
+        android:overScrollMode="never"
         android:text="SARL GOYARD"
-        android:textSize="20dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,8 +39,9 @@
         app:layout_constraintTop_toBottomOf="@+id/stationNom" />
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="218dp"
-        android:layout_height="80dp"
+        android:layout_height="102dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/stationAdresse"
         app:layout_constraintTop_toTopOf="parent">
@@ -49,7 +54,7 @@
                 android:id="@+id/stationsCarburantB7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gazole (B7) :" />
+                android:text="Gazole (B7) : " />
 
             <TextView
                 android:id="@+id/stationsPrixB7"
@@ -65,8 +70,8 @@
             <TextView
                 android:id="@+id/stationCarburantE10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SP95-E10 (E10): " />
+                android:layout_height="match_parent"
+                android:text="E10 : " />
 
             <TextView
                 android:id="@+id/stationsPrixE10"
@@ -80,13 +85,13 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/stationCarburantE5"
+                android:id="@+id/stationCarburant98"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SP98-E5 (E5) :" />
+                android:text="SP98 :" />
 
             <TextView
-                android:id="@+id/stationsPrixE5"
+                android:id="@+id/stationsPrixSP98"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
@@ -100,10 +105,27 @@
                 android:id="@+id/stationCarburantE85"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="E85 (E85) :" />
+                android:text="E85 :" />
 
             <TextView
                 android:id="@+id/stationsPrixE85"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SP95 : " />
+
+            <TextView
+                android:id="@+id/stationsPrixSP95"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
