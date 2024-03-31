@@ -4,15 +4,17 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.maps.android.clustering.ClusterItem;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,7 +22,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Station implements Serializable
+public class Station implements Serializable, ClusterItem
 {
     @SerializedName("cp")
     @Expose
@@ -28,7 +30,7 @@ public class Station implements Serializable
     @SerializedName("address")
     @Expose
     public String address;
-    @SerializedName("com_arm_name")
+    @SerializedName("city")
     @Expose
     public String comArmName;
     @SerializedName("automate_24_24")
@@ -128,13 +130,31 @@ public class Station implements Serializable
         this.geoPoint = geoPoint;
     }
 
+    @NonNull
+    @Override
+    public LatLng getPosition() {
+        return withGeoPointObj();
+    }
+
+    @Nullable
+    @Override
+    public String getTitle() {
+        return String.valueOf(withComArmName());
+    }
+
+    @Nullable
+    @Override
+    public String getSnippet() {
+        return null;
+    }
+
     public interface OnStationsLoadedListener {
         void onStationsLoaded(ArrayList<Station> stations);
     }
 
     public static void getStations(int limit, int offset, OnStationsLoadedListener listener) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix-des-carburants-j-1/")
+                .baseUrl("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_j_7/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -171,9 +191,8 @@ public class Station implements Serializable
         return this;
     }
 
-    public Station withComArmName(String comArmName) {
-        this.comArmName = comArmName;
-        return this;
+    public String withComArmName() {
+        return comArmName;
     }
 
     public Station withAutomate2424(String automate2424) {
