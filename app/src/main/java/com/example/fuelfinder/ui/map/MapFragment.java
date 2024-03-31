@@ -1,50 +1,32 @@
 package com.example.fuelfinder.ui.map;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.fuelfinder.IApiStationService;
-import com.example.fuelfinder.R;
 import com.example.fuelfinder.Station;
-import com.example.fuelfinder.apiItems;
-import com.example.fuelfinder.databinding.FragmentHomeBinding;
 import com.example.fuelfinder.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.VisibleRegion;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
     private FragmentMapBinding binding;
     private ArrayList<Station> listStations;
     private MapView mapView;
     private GoogleMap googleMap;
-    private static final LatLng LYON_COORDINATES = new LatLng(45.75, 4.85); // Coordonnées de Lyon
+    private static final LatLng PARIS_COORDINATES = new LatLng(48.8566, 2.3522); // Coordonnées de Paris
     private boolean loadingStations = false;
     private LatLng lastCameraPosition;
 
@@ -70,11 +52,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onMapReady(@NonNull GoogleMap map) {
         googleMap = map;
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LYON_COORDINATES, 10)); // Zoom sur Lyon avec un niveau de zoom de 10
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PARIS_COORDINATES, 10)); // Zoom sur Paris avec un niveau de zoom de 10
         googleMap.setOnCameraMoveListener(this);
         googleMap.setOnCameraIdleListener(this);
-
-        loadStations();
     }
 
     @Override
@@ -84,27 +64,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onCameraIdle() {
-        addMarkersToMap();
-
+        loadStations();
     }
 
     private void loadStations() {
-        loadingStations = true;
-        int offset = 0;
-        int limit = 100;
-        while (true) {
-            Station.getStations(limit, offset, new Station.OnStationsLoadedListener() {
-                @Override
-                public void onStationsLoaded(ArrayList<Station> stations) {
-                    listStations.addAll(stations);
-                    addMarkersToMap();
-                }
-            });
-            offset += limit;
-            if (offset >= 4000) { // Limite maximale atteinte
-                break;
+        LatLng center = googleMap.getCameraPosition().target;
+        double lat = center.latitude;
+        double lon = center.longitude;
+        int radius = 10; // Rayon en kilomètres
+
+        Station.getLocatedStations(String.valueOf(lon), String.valueOf(lat), radius, 20, 0, new Station.OnStationsLoadedListener() {
+            @Override
+            public void onStationsLoaded(ArrayList<Station> stations) {
+                listStations.clear();
+                listStations.addAll(stations);
+                addMarkersToMap();
             }
-        }
+        });
     }
 
     private void addMarkersToMap() {
@@ -119,18 +95,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
     }
 
-
     private boolean isStationInVisibleRegion(LatLng position) {
         if (googleMap != null) {
-            // Obtient la projection de la carte
-            Projection projection = googleMap.getProjection();
-            if (projection != null) {
-                // Obtient la région visible actuelle de la carte
-                VisibleRegion visibleRegion = projection.getVisibleRegion();
-                LatLngBounds bounds = visibleRegion.latLngBounds;
-                // Vérifie si la position de la station est dans les limites de la région visible
-                return bounds.contains(position);
-            }
+            VisibleRegion visibleRegion = googleMap.getProjection().getVisibleRegion();
+            return visibleRegion.latLngBounds.contains(position);
         }
         return false;
     }
@@ -141,4 +109,3 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         binding = null;
     }
 }
-

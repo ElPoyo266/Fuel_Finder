@@ -11,7 +11,6 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.fuelfinder.R;
@@ -19,9 +18,6 @@ import com.example.fuelfinder.Station;
 import com.example.fuelfinder.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
-
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
@@ -48,6 +44,7 @@ public class HomeFragment extends Fragment {
                 adapter.notifyDataSetChanged(); // Met à jour l'adapter avec les nouvelles données
             }
         });
+
 
         adapter = new listStationsAdapter(requireContext(), listStations);
         listStation.setAdapter(adapter);

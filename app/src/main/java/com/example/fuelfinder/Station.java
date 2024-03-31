@@ -7,14 +7,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.maps.android.clustering.ClusterItem;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -139,7 +139,7 @@ public class Station implements Serializable, ClusterItem
     @Nullable
     @Override
     public String getTitle() {
-        return String.valueOf(withComArmName());
+        return null;
     }
 
     @Nullable
@@ -160,7 +160,37 @@ public class Station implements Serializable, ClusterItem
 
         IApiStationService stationService = retrofit.create(IApiStationService.class);
 
-        Call<apiItems> resStation = stationService.get20Station(limit, offset);
+        Call<apiItems> resStation = stationService.getStation(limit, offset);
+        resStation.enqueue(new Callback<apiItems>() {
+            @Override
+            public void onResponse(Call<apiItems> call, Response<apiItems> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().stations != null) {
+                    ArrayList<Station> listStations = (ArrayList<Station>) response.body().stations;
+                    Log.d(TAG, "Reussi : API Toutes les stations récupérées" + response);
+                    listener.onStationsLoaded(listStations);
+                } else {
+                    Log.d(TAG, "Réponse API invalide ou liste de stations null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<apiItems> call, Throwable t) {
+                Log.d(TAG, "onFailure: C'est cassé");
+            }
+        });
+    }
+
+    public static void getLocatedStations(String lon, String lat, int radius, int limit, int offset, OnStationsLoadedListener listener) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix_des_carburants_j_7/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        IApiStationService stationService = retrofit.create(IApiStationService.class);
+
+
+        Call<apiItems> resStation = stationService.getLocatedStation("within_distance(geo_point%2C%20geom'POINT("+lon+"%20"+lat+")'%2C"+radius+"km)%20" , 100, 0);
+
         resStation.enqueue(new Callback<apiItems>() {
             @Override
             public void onResponse(Call<apiItems> call, Response<apiItems> response) {
@@ -169,7 +199,7 @@ public class Station implements Serializable, ClusterItem
                     Log.d(TAG, "Reussi : API Toutes les stations récupérées" + listStations.size());
                     listener.onStationsLoaded(listStations);
                 } else {
-                    Log.d(TAG, "Réponse API invalide ou liste de stations null");
+                    Log.d(TAG, "Réponse API invalide ou liste de stations null" + response);
                 }
             }
 
