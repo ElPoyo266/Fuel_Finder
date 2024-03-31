@@ -1,13 +1,24 @@
 package com.example.fuelfinder;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Station implements Serializable
 {
@@ -117,6 +128,39 @@ public class Station implements Serializable
         this.geoPoint = geoPoint;
     }
 
+    public interface OnStationsLoadedListener {
+        void onStationsLoaded(ArrayList<Station> stations);
+    }
+
+    public static void getStations(int limit, int offset, OnStationsLoadedListener listener) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/prix-des-carburants-j-1/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        IApiStationService stationService = retrofit.create(IApiStationService.class);
+
+        Call<apiItems> resStation = stationService.get20Station(limit, offset);
+        resStation.enqueue(new Callback<apiItems>() {
+            @Override
+            public void onResponse(Call<apiItems> call, Response<apiItems> response) {
+                if (response.isSuccessful() && response.body() != null && response.body().stations != null) {
+                    ArrayList<Station> listStations = (ArrayList<Station>) response.body().stations;
+                    Log.d(TAG, "Reussi : API Toutes les stations récupérées" + listStations.size());
+                    listener.onStationsLoaded(listStations);
+                } else {
+                    Log.d(TAG, "Réponse API invalide ou liste de stations null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<apiItems> call, Throwable t) {
+                Log.d(TAG, "onFailure: C'est cassé");
+            }
+        });
+    }
+
+
     public Station withCp(String cp) {
         this.cp = cp;
         return this;
@@ -206,6 +250,22 @@ public class Station implements Serializable
         this.geoPoint = geoPoint;
         return this;
     }
+
+    public LatLng withGeoPointObj(){
+        if (geoPoint != null) {
+            String[] parts = geoPoint.toString().split(", lat=");
+            if (parts.length == 2) {
+                String lonPart = parts[0];
+                String latPart = parts[1].replace("}", ""); // Supprime le caractère '}' à la fin
+                double longitude = Double.parseDouble(lonPart.substring(5));
+                double latitude = Double.parseDouble(latPart);
+                return new LatLng(latitude, longitude);
+            }
+        }
+        return null;
+    }
+
+
 
     @Override
     public String toString() {
