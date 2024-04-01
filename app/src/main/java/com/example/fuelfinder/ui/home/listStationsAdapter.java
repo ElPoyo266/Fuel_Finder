@@ -1,5 +1,6 @@
 package com.example.fuelfinder.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.fuelfinder.R;
 import com.example.fuelfinder.Station;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class listStationsAdapter extends BaseAdapter {
 
@@ -47,6 +48,7 @@ public class listStationsAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ConstraintLayout layoutItem;
@@ -66,8 +68,7 @@ public class listStationsAdapter extends BaseAdapter {
         TextView stationE85 = layoutItem.findViewById(R.id.stationsPrixE85);
         TextView stationSP95 = layoutItem.findViewById(R.id.stationsPrixSP95);
 
-
-
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
         if (currentStation.name != null && !currentStation.name.equals("")) {
             stationName.setText(currentStation.name);
@@ -77,32 +78,30 @@ public class listStationsAdapter extends BaseAdapter {
         stationAdresse.setText(currentStation.address+", "+currentStation.cp+", "+currentStation.comArmName);
 
         if (currentStation.priceGazole != null) {
-            stationB7.setText(String.valueOf(currentStation.priceGazole * 1000)+"€");
+            stationB7.setText( decimalFormat.format(currentStation.priceGazole * 1000)+"€");
         } else {
             stationB7.setText("Indisponible");
         }
         if (currentStation.priceE85 != null) {
-            stationE85.setText(String.valueOf(currentStation.priceE85 * 1000)+"€");
+            stationE85.setText(decimalFormat.format(currentStation.priceE85 * 1000)+"€");
         } else {
             stationE85.setText("Indisponible");
         }
         if (currentStation.priceSp98 != null) {
-            stationSP98.setText(String.valueOf(currentStation.priceSp98 * 1000)+"€");
+            stationSP98.setText(decimalFormat.format(currentStation.priceSp98 * 1000)+"€");
         } else {
             stationSP98.setText("Indisponible");
         }
         if (currentStation.priceE10 != null) {
-            stationE10.setText(String.valueOf(currentStation.priceE10 * 1000)+"€");
+            stationE10.setText(decimalFormat.format(currentStation.priceE10 * 1000)+"€");
         } else {
             stationE10.setText("Indisponible");
         }
         if (currentStation.priceSp95 != null) {
-            stationSP95.setText(String.valueOf(currentStation.priceSp95 * 1000)+"€");
+            stationSP95.setText(decimalFormat.format(currentStation.priceSp95 * 1000)+"€");
         } else {
             stationSP95.setText("Indisponible");
         }
-
-
         return layoutItem;
     }
 }
