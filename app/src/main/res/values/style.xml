@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="StationTitleText">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StationInfoText">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="StationFuelText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingEnd">8dp</item>
+    </style>
+
+    <style name="StationPriceText">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

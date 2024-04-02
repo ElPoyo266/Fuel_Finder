@@ -119,13 +119,13 @@ public class HomeFragment extends Fragment {
             Type type = new TypeToken<ArrayList<Station>>(){}.getType();
             favoriteStations = gson.fromJson(favoriteStationsJson, type);
         } else {
-            favoriteStations = new ArrayList<>(); // Si la liste de favoris n'existe pas encore, initialiser une liste vide
+            favoriteStations = new ArrayList<>();
         }
     }
 
 
     private void addStationToFavorites(Station station) {
-        favoriteStations.add(station); // Supposons que getId() retourne un identifiant unique pour la station
+        favoriteStations.add(station);
         saveFavoriteStations();
     }
 

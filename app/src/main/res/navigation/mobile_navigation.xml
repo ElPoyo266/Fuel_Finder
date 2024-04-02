@@ -21,5 +21,5 @@
         android:id="@+id/navigation_favoris"
         android:name="com.example.fuelfinder.ui.notifications.FavorisFragment"
         android:label="@string/title_favoris"
-        tools:layout="@layout/fragment_favoris" />
+        tools:layout="@layout/fragment_home" />
 </navigation>

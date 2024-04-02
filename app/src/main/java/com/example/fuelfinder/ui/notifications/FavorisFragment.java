@@ -63,7 +63,6 @@ public class FavorisFragment extends Fragment {
     }
 
     private ArrayList<Station> loadFavoriteStations() {
-        // Charger les stations favorites depuis les préférences partagées
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("favorite_stations", requireContext().MODE_PRIVATE);
         String favoriteStationsJson = sharedPreferences.getString("favorite_stations", null);
 
@@ -72,7 +71,7 @@ public class FavorisFragment extends Fragment {
             Type type = new TypeToken<ArrayList<Station>>(){}.getType();
             return gson.fromJson(favoriteStationsJson, type);
         } else {
-            return new ArrayList<>(); // Retourne une liste vide si aucune station favorite n'est sauvegardée
+            return new ArrayList<>();
         }
     }
 
