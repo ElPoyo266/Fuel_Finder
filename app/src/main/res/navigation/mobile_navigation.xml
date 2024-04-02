@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/navigation_map"
         android:name="com.example.fuelfinder.ui.map.MapFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_carte"
         tools:layout="@layout/fragment_map" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.fuelfinder.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_favoris"
+        android:name="com.example.fuelfinder.ui.notifications.FavorisFragment"
+        android:label="@string/title_favoris"
+        tools:layout="@layout/fragment_favoris" />
 </navigation>

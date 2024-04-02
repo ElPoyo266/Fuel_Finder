@@ -35,7 +35,8 @@ public class listStationsAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return listStations.size();
+        return listStations != null ? listStations.size() : 0;
+
     }
 
     @Override
@@ -67,6 +68,7 @@ public class listStationsAdapter extends BaseAdapter {
         TextView stationE10 = layoutItem.findViewById(R.id.stationsPrixE10);
         TextView stationE85 = layoutItem.findViewById(R.id.stationsPrixE85);
         TextView stationSP95 = layoutItem.findViewById(R.id.stationsPrixSP95);
+        TextView stationBrand = layoutItem.findViewById(R.id.stationsMarque);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.###");
 
@@ -76,6 +78,7 @@ public class listStationsAdapter extends BaseAdapter {
             stationName.setText(currentStation.address);
         }
         stationAdresse.setText(currentStation.address+", "+currentStation.cp+", "+currentStation.comArmName);
+        stationBrand.setText((CharSequence) currentStation.brand);
 
         if (currentStation.priceGazole != null) {
             stationB7.setText( decimalFormat.format(currentStation.priceGazole * 1000)+"€");

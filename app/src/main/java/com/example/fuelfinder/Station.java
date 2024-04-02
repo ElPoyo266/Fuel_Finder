@@ -13,6 +13,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,13 +83,6 @@ public class Station implements Serializable, ClusterItem
 
     /**
      * No args constructor for use in serialization
-     *
-     */
-    public Station() {
-    }
-
-    /**
-     *
      * @param priceE85
      * @param address
      * @param priceE10
@@ -139,13 +133,23 @@ public class Station implements Serializable, ClusterItem
     @Nullable
     @Override
     public String getTitle() {
-        return null;
+        return name;
     }
 
     @Nullable
     @Override
     public String getSnippet() {
-        return null;
+        DecimalFormat decimalFormat = new DecimalFormat("#.###");
+        String prixGazole = (priceGazole != null) ? decimalFormat.format(priceGazole * 1000) : "Indisponible";
+        String prixE85 = (priceE85 != null) ? decimalFormat.format(priceE85 * 1000) : "Indisponible";
+        String prixSp98 = (priceSp98 != null) ? decimalFormat.format(priceSp98 * 1000) : "Indisponible";
+        String prixSp95 = (priceSp95 != null) ? decimalFormat.format(priceSp95 * 1000) : "Indisponible";
+        String prixE10 = (priceE10 != null) ? decimalFormat.format(priceE10 * 1000) : "Indisponible";
+        return "Prix B7 : " + prixGazole + "\n" +
+                "Prix E85 : " + prixE85 + "\n" +
+                "Prix SP98 : " + prixSp98 + "\n" +
+                "Prix SP95 : " + prixSp95 + "\n" +
+                "Prix E10 : " + prixE10;
     }
 
     public interface OnStationsLoadedListener {

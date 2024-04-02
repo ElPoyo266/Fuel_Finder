@@ -7,10 +7,11 @@
 
     <TextView
         android:id="@+id/stationsMarque"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Total"
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stationAdresse" />
 
@@ -31,19 +32,21 @@
 
     <TextView
         android:id="@+id/stationAdresse"
-        android:layout_width="167dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="1699 ROUTE DE BOURG, MALAFRETAZ"
+        app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stationNom" />
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="218dp"
-        android:layout_height="102dp"
+        android:layout_width="187dp"
+        android:layout_height="105dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/stationAdresse"
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
@@ -54,13 +57,17 @@
                 android:id="@+id/stationsCarburantB7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gazole (B7) : " />
+                android:background="#FFEB3B"
+                android:text="Gazole (B7) : "
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/stationsPrixB7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="#FFEB3B"
+                android:text="TextView"
+                android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
@@ -70,14 +77,18 @@
             <TextView
                 android:id="@+id/stationCarburantE10"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="E10 : " />
+                android:layout_height="wrap_content"
+                android:background="#4CAF50"
+                android:text="E10 : "
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/stationsPrixE10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="#4CAF50"
+                android:text="TextView"
+                android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
@@ -88,13 +99,17 @@
                 android:id="@+id/stationCarburant98"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SP98 :" />
+                android:background="#8BC34A"
+                android:text="SP98 :"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/stationsPrixSP98"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="#8BC34A"
+                android:text="TextView"
+                android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
@@ -105,32 +120,42 @@
                 android:id="@+id/stationCarburantE85"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="E85 :" />
+                android:background="#00BCD4"
+                android:text="E85 :"
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/stationsPrixE85"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="#00BCD4"
+                android:text="TextView"
+                android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SP95 : " />
+                android:background="#8BC34A"
+                android:text="SP95 : "
+                android:textColor="@color/black" />
 
             <TextView
                 android:id="@+id/stationsPrixSP95"
-                android:layout_width="wrap_content"
+                android:layout_width="99dp"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:background="#8BC34A"
+                android:text="TextView"
+                android:textColor="@color/black" />
         </TableRow>
 
     </TableLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
