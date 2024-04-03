@@ -11,6 +11,7 @@
         style="@style/StationInfoText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:text="Total"
         app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,9 @@
         style="@style/StationTitleText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:text="SARL GOYARD"
+        app:layout_constraintBottom_toTopOf="@+id/stationAdresse"
         app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +34,9 @@
         style="@style/StationInfoText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="1699 ROUTE DE BOURG, MALAFRETAZ"
+        app:layout_constraintBottom_toTopOf="@+id/stationsMarque"
         app:layout_constraintEnd_toStartOf="@+id/tableLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stationNom" />
@@ -53,6 +58,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#FFEB3B"
+                android:breakStrategy="simple"
+                android:ellipsize="none"
+                android:fontFamily="sans-serif"
                 android:text="Gazole (B7) : "
                 android:textColor="@color/black" />
 
@@ -61,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#FFEB3B"
+                android:fontFamily="sans-serif-black"
                 android:text="TextView"
                 android:textColor="@color/black" />
         </TableRow>
@@ -82,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#4CAF50"
+                android:fontFamily="sans-serif-black"
                 android:text="TextView"
                 android:textColor="@color/black" />
         </TableRow>
@@ -103,6 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#8BC34A"
+                android:fontFamily="sans-serif-black"
                 android:text="TextView"
                 android:textColor="@color/black" />
         </TableRow>
@@ -124,6 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#00BCD4"
+                android:fontFamily="sans-serif-black"
                 android:text="TextView"
                 android:textColor="@color/black" />
         </TableRow>
@@ -145,6 +157,7 @@
                 android:layout_width="99dp"
                 android:layout_height="wrap_content"
                 android:background="#8BC34A"
+                android:fontFamily="sans-serif-black"
                 android:text="TextView"
                 android:textColor="@color/black" />
         </TableRow>

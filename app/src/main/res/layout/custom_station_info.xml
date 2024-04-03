@@ -9,9 +9,10 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/baseline_local_gas_station_24"
+        android:textColor="@color/black"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/descriptionTextView"

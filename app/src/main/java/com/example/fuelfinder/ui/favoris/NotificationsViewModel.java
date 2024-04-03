@@ -1,4 +1,4 @@
-package com.example.fuelfinder.ui.notifications;
+package com.example.fuelfinder.ui.favoris;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -1,10 +1,12 @@
-package com.example.fuelfinder;
+package com.example.fuelfinder.ui.map;
+
+import com.example.fuelfinder.Station;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class apiItems implements Serializable
 {

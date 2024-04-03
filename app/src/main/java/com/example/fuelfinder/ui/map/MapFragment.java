@@ -4,6 +4,7 @@
     import android.annotation.SuppressLint;
     import android.content.Context;
     import android.content.Intent;
+    import android.content.SharedPreferences;
     import android.content.pm.PackageManager;
     import android.os.Bundle;
     import android.util.Log;
@@ -11,6 +12,7 @@
     import android.view.View;
     import android.view.ViewGroup;
     import android.widget.TextView;
+    import android.widget.Toast;
 
     import androidx.annotation.NonNull;
     import androidx.annotation.Nullable;
@@ -30,11 +32,14 @@
     import com.google.android.gms.maps.model.Marker;
     import com.google.android.gms.maps.model.MarkerOptions;
     import com.google.android.gms.maps.model.VisibleRegion;
+    import com.google.gson.Gson;
+    import com.google.gson.reflect.TypeToken;
     import com.google.maps.android.clustering.Cluster;
     import com.google.maps.android.clustering.ClusterManager;
     import com.google.maps.android.clustering.view.DefaultClusterRenderer;
     import com.google.maps.android.collections.MarkerManager;
 
+    import java.lang.reflect.Type;
     import java.util.ArrayList;
 
     public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener, ClusterManager.OnClusterClickListener<Station> {
@@ -44,10 +49,10 @@
         private MapView mapView;
         private GoogleMap googleMap;
         private static final LatLng PARIS_COORDINATES = new LatLng(48.8566, 2.3522);
-        private boolean loadingStations = false;
         private LatLng lastCameraPosition;
         private ClusterManager<Station> clusterManager;
         private boolean markerClicked = false;
+        private ArrayList<Station> favoriteStations;
 
 
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,6 +113,15 @@
                 }
 
                 @Override
+                public void onInfoWindowLongClick(Marker marker) {
+                    loadFavoriteStations();
+                    favoriteStations.add((Station) marker.getTag());
+                    saveFavoriteStations();
+                    Toast.makeText(requireContext(), "Station ajoutée aux favoris", Toast.LENGTH_SHORT).show();
+                    super.onInfoWindowLongClick(marker);
+                }
+
+                @Override
                 public boolean onMarkerClick(Marker marker) {
                     markerClicked = true;
                     return super.onMarkerClick(marker);
@@ -118,6 +132,29 @@
             googleMap.setOnMarkerClickListener(clusterManager);
 
 
+        }
+
+        private void loadFavoriteStations() {
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("favorite_stations", requireContext().MODE_PRIVATE);
+            String favoriteStationsJson = sharedPreferences.getString("favorite_stations", null);
+
+            if (favoriteStationsJson != null) {
+                Gson gson = new Gson();
+                Type type = new TypeToken<ArrayList<Station>>(){}.getType();
+                favoriteStations = gson.fromJson(favoriteStationsJson, type);
+            } else {
+                favoriteStations = new ArrayList<>();
+            }
+        }
+
+        private void saveFavoriteStations() {
+            Gson gson = new Gson();
+            String favoriteStationsJson = gson.toJson(favoriteStations);
+
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("favorite_stations", requireContext().MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("favorite_stations", favoriteStationsJson);
+            editor.apply();
         }
 
         @Override
